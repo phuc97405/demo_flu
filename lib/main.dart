@@ -1,25 +1,21 @@
+import 'package:demo_flu/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 void main() {
-  runApp(const MyHomePage(title: 'Flutter Demo'));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MyHomePage(
-      title: 'Flutter Demo',
-      // ),
-    );
+    return const MaterialApp(home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -27,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  int _selectedFruit = 0;
+  int _selectedValue = 0;
 
   List<String> _fruitNames = <String>[
     'Apple',
@@ -50,27 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
         _counter = _counter - 1;
       });
     }
-  }
-
-  void _showDialog(Widget child) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => Container(
-        height: 216,
-        padding: const EdgeInsets.only(top: 6.0),
-        // The Bottom margin is provided to align the popup above the system navigation bar.
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        // Provide a background color for the popup.
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        // Use a SafeArea widget to avoid system overlaps.
-        child: SafeArea(
-          top: false,
-          child: child,
-        ),
-      ),
-    );
   }
 
   final stars = Row(
@@ -256,331 +231,340 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _showPicker(BuildContext context) async {
+    await showCupertinoModalPopup(
+        context: context,
+        builder: ((BuildContext builder) {
+          return Container(
+            width: double.infinity,
+            height: 250,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    width: 1,
+                    color: const Color(0xffE1E2E5),
+                    style: BorderStyle.solid),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50))),
+            child: CupertinoPicker(
+              backgroundColor: Colors.red,
+              itemExtent: 30,
+              scrollController: FixedExtentScrollController(initialItem: 0),
+              children: List.generate(
+                  _fruitNames.length, (index) => Text(_fruitNames[index])),
+              onSelectedItemChanged: (int value) {
+                setState(() {});
+              },
+            ),
+          );
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            leadingWidth: 40,
-            toolbarHeight: 50,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Image.asset(
-                'lib/images/ic_bus.png',
-                width: 30,
-                height: 40,
-              ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          leadingWidth: 40,
+          toolbarHeight: 50,
+          automaticallyImplyLeading: false,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Image.asset(
+              'lib/images/ic_bus.png',
+              width: 30,
+              height: 40,
             ),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.menu,
-                  size: 24,
-                  color: Colors.black,
-                ),
-              )
-            ],
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            bottom: const TabBar(
-                labelColor: Color(0xff628941),
-                indicator: BoxDecoration(
-                  color: Color(0xffCADEAF),
-                  border: Border(
-                      bottom: BorderSide(color: Color(0xff628941), width: 3)),
-                ),
-                unselectedLabelColor: Colors.black,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      '설정',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          height: 2,
-                          color: Color(0xff628941)),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      '노선',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          height: 2,
-                          color: Color(0xff628941)),
-                    ),
-                  ),
-                ]),
           ),
-          body: TabBarView(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                      child: Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: const BoxDecoration(color: Colors.white),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "인원수",
-                                style: TextStyle(
-                                    color: Color(0xff0A0A0A),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () => _decrementCounter(),
-                                          child: Image.asset(
-                                            'lib/images/ic_decre.png',
-                                            fit: BoxFit.contain,
-                                          )),
-                                      Text(
-                                        '$_counter',
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            height: 2),
-                                      ),
-                                      GestureDetector(
-                                          onTap: () => _incrementCounter(),
-                                          child: Image.asset(
-                                            'lib/images/ic_incre.png',
-                                            fit: BoxFit.contain,
-                                          )),
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "인원수",
-                                style: TextStyle(
-                                    color: Color(0xff0A0A0A),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                  ),
-                                  child: CupertinoButton(
-                                    onPressed: () => _showDialog(
-                                      CupertinoPicker(
-                                        magnification: 1.22,
-                                        squeeze: 1.2,
-                                        useMagnifier: true,
-                                        itemExtent: 32,
-                                        // This sets the initial item.
-                                        scrollController:
-                                            FixedExtentScrollController(
-                                          initialItem: _selectedFruit,
-                                        ),
-                                        // This is called when selected item is changed.
-                                        onSelectedItemChanged:
-                                            (int selectedItem) {
-                                          setState(() {
-                                            _selectedFruit = selectedItem;
-                                          });
-                                        },
-                                        children: List<Widget>.generate(
-                                            _fruitNames.length, (int index) {
-                                          return Center(
-                                              child: Text(_fruitNames[index]));
-                                        }),
-                                      ),
-                                    ),
-                                    // This displays the selected fruit name.
-
-                                    child: const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Text("버스 노선 번호를 선택해 주세요.")),
-                                        Icon(
-                                          Icons.arrow_drop_down,
-                                        )
-                                      ],
-                                    ),
-                                  )),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "정류장",
-                                style: TextStyle(
-                                    color: Color(0xff0A0A0A),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Expanded(child: Text("선택")),
-                                      Image.asset(
-                                        'lib/images/ic_detail.png',
-                                        fit: BoxFit.contain,
-                                      )
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "교통 약자",
-                                style: TextStyle(
-                                    color: Color(0xff0A0A0A),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                  ),
-                                  child: const Row(
-                                    children: [
-                                      Expanded(child: Text("예")),
-                                      Icon(
-                                        Icons.arrow_drop_down,
-                                      )
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "결제 선택",
-                                style: TextStyle(
-                                    color: Color(0xff0A0A0A),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                  ),
-                                  child: const Row(
-                                    children: [
-                                      Expanded(child: Text("---")),
-                                      Icon(
-                                        Icons.arrow_drop_down,
-                                      )
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ))
-                ],
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(
+                Icons.menu,
+                size: 24,
+                color: Colors.black,
               ),
-              const Text('Tab two'),
-            ],
-          ),
+            )
+          ],
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          bottom: const TabBar(
+              labelColor: Color(0xff628941),
+              indicator: BoxDecoration(
+                color: Color(0xffCADEAF),
+                border: Border(
+                    bottom: BorderSide(color: Color(0xff628941), width: 3)),
+              ),
+              unselectedLabelColor: Colors.black,
+              tabs: [
+                Tab(
+                  child: Text(
+                    '설정',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 2,
+                        color: Color(0xff628941)),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    '노선',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 2,
+                        color: Color(0xff628941)),
+                  ),
+                ),
+              ]),
+        ),
+        body: TabBarView(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                    child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "인원수",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () => _decrementCounter(),
+                                        child: Image.asset(
+                                          'lib/images/ic_decre.png',
+                                          fit: BoxFit.contain,
+                                        )),
+                                    Text(
+                                      '$_counter',
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          height: 2),
+                                    ),
+                                    GestureDetector(
+                                        onTap: () => _incrementCounter(),
+                                        child: Image.asset(
+                                          'lib/images/ic_incre.png',
+                                          fit: BoxFit.contain,
+                                        )),
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "인원수",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: CupertinoButton(
+                                color: Colors.transparent,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => _showPicker(context),
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xffE1E2E5),
+                                        style: BorderStyle.solid),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(6),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                        "버스 노선 번호를 선택해 주세요.",
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.black),
+                                      )),
+                                      Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "정류장",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Expanded(child: Text("선택")),
+                                    Image.asset(
+                                      'lib/images/ic_detail.png',
+                                      fit: BoxFit.contain,
+                                    )
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "교통 약자",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Expanded(child: Text("예")),
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                    )
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "결제 선택",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Expanded(child: Text("---")),
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                    )
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ))
+              ],
+            ),
+            const Text('Tab two'),
+          ],
         ),
       ),
-      debugShowCheckedModeBanner: false,
+      // debugShowCheckedModeBanner: false,
     );
   }
 }
