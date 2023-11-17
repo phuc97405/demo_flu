@@ -1,3 +1,4 @@
+import 'package:demo_flu/dropdown.dart';
 import 'package:demo_flu/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,14 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHomePage());
+    final ColorScheme colorScheme = ColorScheme.fromSeed(
+      brightness: MediaQuery.platformBrightnessOf(context),
+      seedColor: Colors.black26,
+    );
+    return MaterialApp(
+      home: const MyHomePage(),
+      theme: ThemeData(colorScheme: colorScheme),
+    );
   }
 }
 
@@ -23,16 +31,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  int _selectedValue = 0;
-
-  List<String> _fruitNames = <String>[
-    'Apple',
-    'Mango',
-    'Banana',
-    'Orange',
-    'Pineapple',
-    'Strawberry',
-  ];
 
   void _incrementCounter() {
     setState(() {
@@ -231,37 +229,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showPicker(BuildContext context) async {
-    await showCupertinoModalPopup(
-        context: context,
-        builder: ((BuildContext builder) {
-          return Container(
-            width: double.infinity,
-            height: 250,
-            decoration: BoxDecoration(
-                border: Border.all(
-                    width: 1,
-                    color: const Color(0xffE1E2E5),
-                    style: BorderStyle.solid),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50))),
-            child: CupertinoPicker(
-              backgroundColor: Colors.red,
-              itemExtent: 30,
-              scrollController: FixedExtentScrollController(initialItem: 0),
-              children: List.generate(
-                  _fruitNames.length, (index) => Text(_fruitNames[index])),
-              onSelectedItemChanged: (int value) {
-                setState(() {});
-              },
-            ),
-          );
-        }));
-  }
+  // void math() {
+  //   String? text = null;
+  //   List<String?>? hello = ['a', 'b', 'c', null];
+
+  //   hello[2] = 'ehhe';
+
+  //   final person = {
+  //     'name': 'pista',
+  //     'age': 25,
+  //   };
+
+  //   print(hello);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // math();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -287,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             )
           ],
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           bottom: const TabBar(
               labelColor: Color(0xff628941),
               indicator: BoxDecoration(
@@ -296,26 +280,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     bottom: BorderSide(color: Color(0xff628941), width: 3)),
               ),
               unselectedLabelColor: Colors.black,
+              indicatorColor: Color(0xff628941),
+              tabAlignment: TabAlignment.fill,
               tabs: [
                 Tab(
-                  child: Text(
-                    '설정',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 2,
-                        color: Color(0xff628941)),
-                  ),
+                  text: "설정",
+                  // child: Text(
+                  //   '설정',
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     fontWeight: FontWeight.w600,
+                  //     height: 2,
+                  //     // color: Color(0xff628941)
+                  //   ),
+                  // ),
                 ),
                 Tab(
-                  child: Text(
-                    '노선',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 2,
-                        color: Color(0xff628941)),
-                  ),
+                  text: "노선",
+                  // Text(
+                  //   '노선',
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     fontWeight: FontWeight.w600,
+                  //     height: 2,
+                  //     // color: Color(0xff628941)
+                  //   ),
+                  // ),
                 ),
               ]),
         ),
@@ -403,7 +393,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: CupertinoButton(
                                 color: Colors.transparent,
                                 padding: const EdgeInsets.all(0),
-                                onPressed: () => _showPicker(context),
+                                onPressed: () => showCupertinoModalPopup(
+                                    context: context,
+                                    builder: ((BuildContext builder) {
+                                      return const Picker();
+                                    })),
+                                // _showPicker(context),
                                 child: Container(
                                   padding: const EdgeInsets.all(6),
                                   height: 44,
@@ -478,10 +473,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Text(
                               "교통 약자",
                               style: TextStyle(
@@ -490,29 +485,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontSize: 16),
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                                padding: const EdgeInsets.all(6),
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
-                                ),
-                                child: const Row(
-                                  children: [
-                                    Expanded(child: Text("예")),
-                                    Icon(
-                                      Icons.arrow_drop_down,
-                                    )
-                                  ],
-                                )),
-                          )
+                          Expanded(flex: 2, child: DropdownMenuExample())
                         ],
                       ),
                       const SizedBox(
