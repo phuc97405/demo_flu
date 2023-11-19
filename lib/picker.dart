@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Picker extends StatefulWidget {
-  const Picker({Key? key}) : super(key: key);
+  Function? callback;
+  Picker({this.callback});
 
   @override
   State<Picker> createState() => _PickerState();
@@ -35,11 +36,37 @@ class _PickerState extends State<Picker> {
         itemExtent: 30,
         scrollController: FixedExtentScrollController(initialItem: 3),
         children: List.generate(
-            _fruitNames.length, (index) => Text(_fruitNames[index])),
+            _fruitNames.length,
+            (index) => Text(
+                  _fruitNames[index],
+                  style: Theme.of(context).textTheme.labelLarge,
+                )),
         onSelectedItemChanged: (int value) {
-          setState(() {});
+          setState(() {
+            widget.callback!(_fruitNames[value]);
+          });
         },
       ),
     );
   }
 }
+
+// Vehicle myVehicle = Vehicle();
+
+// class Vehicle {
+//   // void moveForward(int meters) {
+//   //   // ...
+//   // }
+
+//   set contact(int value) {}
+
+//   static hello() {}
+// }
+
+// class Car extends Vehicle {
+//   @override
+//   set contact(num value ) {}
+
+//   // int pada = 4;
+//   // void moveForward(int value) {}
+// }

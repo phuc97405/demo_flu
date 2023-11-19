@@ -1,7 +1,8 @@
-import 'package:demo_flu/dropdown.dart';
 import 'package:demo_flu/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'models/Transportation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,16 +10,53 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = ColorScheme.fromSeed(
-      brightness: MediaQuery.platformBrightnessOf(context),
-      seedColor: Colors.black26,
-    );
     return MaterialApp(
-      home: const MyHomePage(),
-      theme: ThemeData(colorScheme: colorScheme),
-    );
+        home: const MyHomePage(),
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: const ColorScheme(
+              brightness: Brightness.dark,
+              primary: Color(0xffCADEAF),
+              onPrimary: Color(0xff628941),
+              secondary: Colors.blue,
+              onSecondary: Colors.blue,
+              error: Colors.red,
+              onError: Colors.red,
+              background: Colors.white,
+              onBackground: Colors.white,
+              onSecondaryContainer: Colors.black,
+              surface: Colors.white,
+              onSurface: Color(0xff628941)),
+          textTheme: TextTheme(
+            displayLarge: const TextStyle(
+              fontSize: 72,
+              fontWeight: FontWeight.bold,
+            ),
+            labelLarge: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff090A0B)),
+            labelMedium: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                height: 2,
+                color: Color(0xff090A0B)),
+            headlineMedium: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                height: 2,
+                color: Color(0xffA3A5AE)),
+            titleLarge: GoogleFonts.oswald(
+              fontSize: 30,
+              fontStyle: FontStyle.italic,
+            ),
+            bodyMedium: GoogleFonts.merriweather(),
+            displaySmall: GoogleFonts.pacifico(),
+          ),
+        ));
   }
 }
 
@@ -30,7 +68,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   int _counter = 0;
+  String _placeholderBus = "버스 노선 번호를 선택해 주세요.";
+  int _indexCurrentOption = -1;
+
+  List<Transportation> typeTransportation = [
+    Transportation(title: "예", isChecked: true, id: 0),
+    Transportation(title: "아니요", isChecked: false, id: 1)
+  ];
 
   void _incrementCounter() {
     setState(() {
@@ -229,30 +276,57 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // void math() {
-  //   String? text = null;
-  //   List<String?>? hello = ['a', 'b', 'c', null];
-
-  //   hello[2] = 'ehhe';
-
-  //   final person = {
-  //     'name': 'pista',
-  //     'age': 25,
-  //   };
-
-  //   print(hello);
-  // }
+  callback(value) {
+    setState(() {
+      _placeholderBus = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    double widthScreen = MediaQuery.of(context).size.width;
     // math();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
+        endDrawerEnableOpenDragGesture: false,
+        endDrawer: Drawer(
+          elevation: 16,
+          child: ListView(
+            padding: const EdgeInsets.all(0.0),
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
+                accountName: Text("Pista99"),
+                accountEmail: Text("pista@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text("Pista"),
+                ),
+              ),
+              const ListTile(
+                title: Text("Home"),
+                trailing: Icon(Icons.new_releases),
+              ),
+              const Divider(),
+              ListTile(
+                title: Text("Profile"),
+                trailing: Icon(Icons.person),
+                onTap: () => {},
+              ),
+              const Divider(),
+              ListTile(
+                title: Text("Close"),
+                trailing: Icon(Icons.close),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           leadingWidth: 40,
           toolbarHeight: 50,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
           leading: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Image.asset(
@@ -261,250 +335,277 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 40,
             ),
           ),
-          actions: const [
+          actions: [
             Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.menu,
-                size: 24,
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+                icon: const Icon(
+                  Icons.menu,
+                  size: 24,
+                ),
                 color: Colors.black,
               ),
             )
           ],
           // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          bottom: const TabBar(
-              labelColor: Color(0xff628941),
-              indicator: BoxDecoration(
-                color: Color(0xffCADEAF),
-                border: Border(
-                    bottom: BorderSide(color: Color(0xff628941), width: 3)),
+          bottom: TabBar(
+              labelColor: Theme.of(context).colorScheme.onPrimary,
+              labelStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                height: 2,
               ),
-              unselectedLabelColor: Colors.black,
-              indicatorColor: Color(0xff628941),
-              tabAlignment: TabAlignment.fill,
-              tabs: [
+              labelPadding: const EdgeInsets.symmetric(horizontal: 0),
+              indicator: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                border: Border(
+                    bottom: BorderSide(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        width: 3,
+                        style: BorderStyle.solid)),
+              ),
+              // unselectedLabelColor:
+              //     Theme.of(context).colorScheme.errorContainer,
+              tabs: <Widget>[
                 Tab(
-                  text: "설정",
-                  // child: Text(
-                  //   '설정',
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //     fontWeight: FontWeight.w600,
-                  //     height: 2,
-                  //     // color: Color(0xff628941)
-                  //   ),
-                  // ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text('설정',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
+                  ),
                 ),
                 Tab(
-                  text: "노선",
-                  // Text(
-                  //   '노선',
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //     fontWeight: FontWeight.w600,
-                  //     height: 2,
-                  //     // color: Color(0xff628941)
-                  //   ),
-                  // ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text('노선',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
+                  ),
                 ),
               ]),
         ),
         body: TabBarView(
           children: [
-            Column(
-              children: [
-                Expanded(
-                    child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              "인원수",
-                              style: TextStyle(
-                                  color: Color(0xff0A0A0A),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                            ),
+            Stack(children: [
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: const BoxDecoration(color: Colors.white),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "인원수",
+                            style: TextStyle(
+                                color: Color(0xff0A0A0A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                                padding: const EdgeInsets.all(6),
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                              padding: const EdgeInsets.all(6),
+                              height: 44,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(6),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () => _decrementCounter(),
-                                        child: Image.asset(
-                                          'lib/images/ic_decre.png',
-                                          fit: BoxFit.contain,
-                                        )),
-                                    Text(
-                                      '$_counter',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          height: 2),
-                                    ),
-                                    GestureDetector(
-                                        onTap: () => _incrementCounter(),
-                                        child: Image.asset(
-                                          'lib/images/ic_incre.png',
-                                          fit: BoxFit.contain,
-                                        )),
-                                  ],
-                                )),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              "인원수",
-                              style: TextStyle(
-                                  color: Color(0xff0A0A0A),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: CupertinoButton(
-                                color: Colors.transparent,
-                                padding: const EdgeInsets.all(0),
-                                onPressed: () => showCupertinoModalPopup(
-                                    context: context,
-                                    builder: ((BuildContext builder) {
-                                      return const Picker();
-                                    })),
-                                // _showPicker(context),
-                                child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xffE1E2E5),
-                                        style: BorderStyle.solid),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(6),
-                                    ),
-                                  ),
-                                  child: const Row(
-                                    children: [
-                                      Expanded(
-                                          child: Text(
-                                        "버스 노선 번호를 선택해 주세요.",
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.black),
+                                border: Border.all(
+                                    width: 1,
+                                    color: _indexCurrentOption == 0
+                                        ? const Color(0xff628941)
+                                        : const Color(0xffE1E2E5),
+                                    style: BorderStyle.solid),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () => {
+                                            setState(() {
+                                              _indexCurrentOption = 0;
+                                            }),
+                                            _decrementCounter()
+                                          },
+                                      child: Image.asset(
+                                        'lib/images/ic_decre.png',
+                                        fit: BoxFit.contain,
                                       )),
-                                      Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.black,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              "정류장",
-                              style: TextStyle(
-                                  color: Color(0xff0A0A0A),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                            ),
+                                  Text('$_counter',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium),
+                                  GestureDetector(
+                                      onTap: () => {
+                                            setState(() {
+                                              _indexCurrentOption = 0;
+                                            }),
+                                            _incrementCounter()
+                                          },
+                                      child: Image.asset(
+                                        'lib/images/ic_incre.png',
+                                        fit: BoxFit.contain,
+                                      )),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "인원수",
+                            style: TextStyle(
+                                color: Color(0xff0A0A0A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: CupertinoButton(
+                              color: Colors.transparent,
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () => {
+                                    setState(() {
+                                      _indexCurrentOption = 1;
+                                    }),
+                                    showCupertinoModalPopup(
+                                            context: context,
+                                            builder: ((BuildContext builder) {
+                                              return Picker(callback: callback);
+                                            }))
+                                        .whenComplete(() => setState(
+                                            () => _indexCurrentOption = -1))
+                                  },
+                              child: Container(
                                 padding: const EdgeInsets.all(6),
                                 height: 44,
                                 decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1,
+                                      color: _indexCurrentOption == 1
+                                          ? const Color(0xff628941)
+                                          : const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(6),
                                   ),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Expanded(child: Text("선택")),
-                                    Image.asset(
-                                      'lib/images/ic_detail.png',
-                                      fit: BoxFit.contain,
-                                    )
+                                    Expanded(
+                                        child: Text(
+                                      '$_placeholderBus',
+                                      style: const TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                    )),
+                                    _indexCurrentOption == 1
+                                        ? const Icon(
+                                            Icons.arrow_drop_up,
+                                            color: Colors.black,
+                                          )
+                                        : const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.black,
+                                          ),
                                   ],
-                                )),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "교통 약자",
-                              style: TextStyle(
-                                  color: Color(0xff0A0A0A),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                            ),
+                                ),
+                              )),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "정류장",
+                            style: TextStyle(
+                                color: Color(0xff0A0A0A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
                           ),
-                          Expanded(flex: 2, child: DropdownMenuExample())
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              "결제 선택",
-                              style: TextStyle(
-                                  color: Color(0xff0A0A0A),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                            ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                              padding: const EdgeInsets.all(6),
+                              height: 44,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(6),
+                                ),
+                                border: Border.all(
+                                    width: 1,
+                                    color: const Color(0xffE1E2E5),
+                                    style: BorderStyle.solid),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    "선택",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  )),
+                                  Image.asset(
+                                    'lib/images/ic_detail.png',
+                                    fit: BoxFit.contain,
+                                  )
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "교통 약자",
+                            style: TextStyle(
+                                color: Color(0xff0A0A0A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
                           ),
-                          Expanded(
-                            flex: 2,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: GestureDetector(
+                            onTap: () => setState(() {
+                              setState(() {
+                                _indexCurrentOption = 3;
+                              });
+                            }),
                             child: Container(
                                 padding: const EdgeInsets.all(6),
                                 height: 44,
@@ -514,26 +615,160 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                   border: Border.all(
                                       width: 1,
-                                      color: const Color(0xffE1E2E5),
+                                      color: _indexCurrentOption == 3
+                                          ? const Color(0xff628941)
+                                          : const Color(0xffE1E2E5),
                                       style: BorderStyle.solid),
                                 ),
-                                child: const Row(
-                                  children: [
-                                    Expanded(child: Text("---")),
-                                    Icon(
-                                      Icons.arrow_drop_down,
-                                    )
-                                  ],
-                                )),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ))
-              ],
-            ),
-            const Text('Tab two'),
+                                child: Row(children: [
+                                  Expanded(
+                                      child: Text(
+                                    typeTransportation
+                                        .firstWhere(
+                                            (element) => element.isChecked!)
+                                        .title
+                                        .toString(),
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                  )),
+                                  _indexCurrentOption == 3
+                                      ? const Icon(
+                                          Icons.arrow_drop_up,
+                                          color: Colors.black,
+                                        )
+                                      : const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                        ),
+                                ])),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "결제 선택",
+                            style: TextStyle(
+                                color: Color(0xff0A0A0A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                              padding: const EdgeInsets.all(6),
+                              height: 44,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(6),
+                                ),
+                                border: Border.all(
+                                    width: 1,
+                                    color: _indexCurrentOption == 4
+                                        ? const Color(0xff628941)
+                                        : const Color(0xffE1E2E5),
+                                    style: BorderStyle.solid),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _indexCurrentOption = 4;
+                                      });
+                                    },
+                                    child: Text(
+                                      "---",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
+                                    ),
+                                  )),
+                                  _indexCurrentOption == 4
+                                      ? const Icon(
+                                          Icons.arrow_drop_up,
+                                          color: Colors.black,
+                                        )
+                                      : const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                        ),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: _indexCurrentOption == 3,
+                child: Positioned(
+                    right: 24,
+                    top: 277,
+                    height: 45 * double.parse('${typeTransportation.length}'),
+                    width: (widthScreen - 48) * (2 / 3),
+                    child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Color(0xffE1E2E5),
+                            ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6))),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(
+                                typeTransportation.length,
+                                (index) => Expanded(
+                                  child: GestureDetector(
+                                    onTap: () => setState(() {
+                                      _indexCurrentOption = -1;
+                                      typeTransportation.forEach((element) {
+                                        if (element.id !=
+                                            typeTransportation[index].id) {
+                                          element.isChecked = false;
+                                        } else
+                                          element.isChecked = true;
+                                      });
+                                    }),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: typeTransportation[index]
+                                                  .isChecked!
+                                              ? const Color(0xffF5F6F7)
+                                              : Colors.white,
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: index <
+                                                          typeTransportation
+                                                              .length
+                                                      ? const Color(0xffE1E2E5)
+                                                      : Colors.white,
+                                                  width: 0.5))),
+                                      child: Text(
+                                          typeTransportation[index].title!),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ))),
+              ),
+            ]),
+            const Text('Tab Two'),
           ],
         ),
       ),

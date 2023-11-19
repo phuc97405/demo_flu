@@ -23,21 +23,12 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
       // initialSelection: list.first,
       width: (widthScreen - 48) * (2 / 3),
       hintText: '예',
-
       textStyle: const TextStyle(
         color: Color(0xff090A0B),
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      // trailingIcon: const Icon(
-      //   Icons.arrow_drop_down_sharp,
-      //   color: Colors.black,
-      //   size: 24,
-      // ),
-      // selectedTrailingIcon: const Icon(
-      //   Icons.ac_unit_rounded,
-      //   color: Colors.black,
-      // ),
+      // requestFocusOnTap: true,
       menuStyle: const MenuStyle(
           padding: MaterialStatePropertyAll(EdgeInsets.all(0)),
           elevation: MaterialStatePropertyAll(5),
@@ -49,16 +40,17 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
       },
       dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
         return DropdownMenuEntry<String>(
-            value: value,
-            label: value,
-            style: const ButtonStyle(
-              textStyle: MaterialStatePropertyAll(TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              )),
-            )
-            // backgroundColor: MaterialStatePropertyAll<Color>(Colors.red))
-            );
+          value: value,
+          label: value,
+          style: MenuItemButton.styleFrom(foregroundColor: Colors.red),
+          //  const ButtonStyle(
+          //   textStyle: MaterialStatePropertyAll(TextStyle(
+          //     fontSize: 12,
+          //     fontWeight: FontWeight.w400,
+          //   )),
+          // )
+          // backgroundColor: MaterialStatePropertyAll<Color>(Colors.red))
+        );
       }).toList(),
     );
   }
