@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:demo_flu/picker.dart';
+import 'package:demo_flu/components/picker.dart';
 import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,6 +50,11 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 height: 2,
                 color: Color(0xff090A0B)),
+            titleMedium: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                height: 2,
+                color: Colors.black),
             headlineMedium: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -121,24 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ],
   );
 
-  final ratings = Container(
-    padding: const EdgeInsets.all(20),
-    child: const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Text(
-          '10 Reviews',
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
-              letterSpacing: 0.5,
-              fontSize: 20),
-        )
-      ],
-    ),
-  );
-
   static const descTextStyle = TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w500,
@@ -146,43 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
       fontFamily: 'Roboto',
       height: 2,
       fontSize: 18);
-
-  final iconList = DefaultTextStyle.merge(
-      style: descTextStyle,
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            border: Border.all(width: 10, color: Colors.black38),
-            color: Colors.black38,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                Icon(Icons.kitchen, color: Colors.green[500]),
-                const Text('PREP'),
-                const Text("25 min")
-              ],
-            ),
-            Column(
-              children: [
-                Icon(Icons.timer, color: Colors.green[500]),
-                const Text('COOK'),
-                const Text("1 hr")
-              ],
-            ),
-            Column(
-              children: [
-                Icon(Icons.restaurant, color: Colors.green[500]),
-                const Text('FEEDS'),
-                const Text("4-6")
-              ],
-            )
-          ],
-        ),
-      ));
 
   Widget _buildGrid() => GridView.extent(
         maxCrossAxisExtent: 150,
@@ -332,11 +280,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         appBar: AppBar(
-          leadingWidth: 40,
+          leadingWidth: 54,
           toolbarHeight: 50,
           // automaticallyImplyLeading: false,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: const EdgeInsets.only(left: 24),
             child: Image.asset(
               'lib/images/ic_bus.png',
               width: 30,
