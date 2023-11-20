@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Picker extends StatefulWidget {
+class Picker extends StatelessWidget {
   Function? callback;
   Picker({this.callback});
 
-  @override
-  State<Picker> createState() => _PickerState();
-}
-
-class _PickerState extends State<Picker> {
   final List<String> _fruitNames = <String>[
     '37 (내임선 - 황전면행정복지센터)',
     '38 (내임선 - 황전면행정복지센터)',
@@ -34,7 +29,7 @@ class _PickerState extends State<Picker> {
       child: CupertinoPicker(
         backgroundColor: Colors.white,
         itemExtent: 30,
-        scrollController: FixedExtentScrollController(initialItem: 3),
+        // scrollController: FixedExtentScrollController(initialItem: 3),
         children: List.generate(
             _fruitNames.length,
             (index) => Text(
@@ -42,9 +37,7 @@ class _PickerState extends State<Picker> {
                   style: Theme.of(context).textTheme.labelLarge,
                 )),
         onSelectedItemChanged: (int value) {
-          setState(() {
-            widget.callback!(_fruitNames[value]);
-          });
+          callback!(_fruitNames[value]);
         },
       ),
     );

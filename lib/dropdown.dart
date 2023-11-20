@@ -17,6 +17,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
 
   @override
   Widget build(BuildContext context) {
+    print(this.mounted);
     double widthScreen = MediaQuery.of(context).size.width;
 
     return DropdownMenu<String>(

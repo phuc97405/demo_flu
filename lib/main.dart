@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:demo_flu/picker.dart';
+import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'models/Transportation.dart';
+
+enum ColorE { red, green, blue }
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: const MyHomePage(),
+        routes: {
+          '/': (context) => const MyHomePage(),
+          '/station': (context) => const Station()
+        },
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: const ColorScheme(
@@ -285,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
-    // math();
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -553,33 +561,39 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Expanded(
                           flex: 2,
-                          child: Container(
-                              padding: const EdgeInsets.all(6),
-                              height: 44,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(6),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/station',
+                                  arguments: {"data": "pista"});
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
                                 ),
-                                border: Border.all(
-                                    width: 1,
-                                    color: const Color(0xffE1E2E5),
-                                    style: BorderStyle.solid),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                    "선택",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium,
-                                  )),
-                                  Image.asset(
-                                    'lib/images/ic_detail.png',
-                                    fit: BoxFit.contain,
-                                  )
-                                ],
-                              )),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text(
+                                      "선택",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
+                                    )),
+                                    Image.asset(
+                                      'lib/images/ic_detail.png',
+                                      fit: BoxFit.contain,
+                                    )
+                                  ],
+                                )),
+                          ),
                         )
                       ],
                     ),
