@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
             labelMedium: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                height: 2,
                 color: Color(0xff090A0B)),
             titleMedium: const TextStyle(
                 fontSize: 16,
@@ -82,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _counter = 0;
-  String _placeholderBus = "버스 노선 번호를 선택해 주세요.";
+  String? _busName;
+  String? _stationName;
   int _indexCurrentOption = -1;
 
   List<Transportation> typeTransportation = [
@@ -234,8 +234,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   callback(value) {
     setState(() {
-      _placeholderBus = value;
+      _busName = value;
     });
+  }
+
+  Future<void> _navigateAndShowStation(BuildContext context) async {
+    final stationName = await Navigator.pushNamed(
+      context, '/station',
+      // arguments: {"data": "pista"}
+    );
+    if (!mounted) return;
+    setState(() {
+      if (stationName.toString().isNotEmpty)
+        _stationName = stationName.toString();
+    });
+    // ScaffoldMessenger.of(context)
+    //   ..removeCurrentSnackBar()
+    //   ..showSnackBar(SnackBar(content: Text('$')));
   }
 
   @override
@@ -473,9 +488,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                   children: [
                                     Expanded(
                                         child: Text(
-                                      '$_placeholderBus',
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.black),
+                                      (_busName ?? '버스 노선 번호를 선택해 주세요.'),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: _busName == null
+                                              ? const Color(0xffA3A5AE)
+                                              : Colors.black),
                                     )),
                                     _indexCurrentOption == 1
                                         ? const Icon(
@@ -510,10 +528,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           flex: 2,
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/station',
-                                  arguments: {"data": "pista"});
-                            },
+                            onTap: () => _busName != null
+                                ? _navigateAndShowStation(context)
+                                : {},
                             child: Container(
                                 padding: const EdgeInsets.all(6),
                                 height: 44,
@@ -530,15 +547,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                   children: [
                                     Expanded(
                                         child: Text(
-                                      "선택",
+                                      (_stationName ?? "선택"),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .headlineMedium
+                                          ?.copyWith(
+                                              color: _stationName != null
+                                                  ? const Color(0xff090A0B)
+                                                  : const Color(0xffA3A5AE)),
                                     )),
-                                    Image.asset(
-                                      'lib/images/ic_detail.png',
-                                      fit: BoxFit.contain,
-                                    )
+                                    (_stationName != null
+                                        ? Image.asset(
+                                            'lib/images/ic_detail_active.png',
+                                            fit: BoxFit.contain,
+                                            width: 22,
+                                            height: 22,
+                                          )
+                                        : Image.asset(
+                                            'lib/images/ic_detail.png',
+                                            fit: BoxFit.contain,
+                                            width: 22,
+                                            height: 22,
+                                          ))
                                   ],
                                 )),
                           ),
@@ -722,7 +752,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       : Colors.white,
                                                   width: 0.5))),
                                       child: Text(
-                                          typeTransportation[index].title!),
+                                        typeTransportation[index].title!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      ),
                                     ),
                                   ),
                                 ),
