@@ -281,14 +281,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Divider(),
               ListTile(
-                title: Text("Profile"),
-                trailing: Icon(Icons.person),
+                title: const Text("Profile"),
+                trailing: const Icon(Icons.person),
                 onTap: () => {},
               ),
               const Divider(),
               ListTile(
-                title: Text("Close"),
-                trailing: Icon(Icons.close),
+                title: const Text("Close"),
+                trailing: const Icon(Icons.close),
                 onTap: () => Navigator.of(context).pop(),
               ),
             ],
@@ -336,7 +336,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 3,
                         style: BorderStyle.solid)),
               ),
-              // unselectedLabelColor:
+              overlayColor: MaterialStatePropertyAll(
+                  Theme.of(context).colorScheme.primary),
+              // unselectedLabelColor: Colors.red,
               //     Theme.of(context).colorScheme.errorContainer,
               tabs: <Widget>[
                 Tab(
@@ -371,131 +373,336 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Stack(children: [
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.only(top: 24),
                 decoration: const BoxDecoration(color: Colors.white),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            "인원수",
-                            style: TextStyle(
-                                color: Color(0xff0A0A0A),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "인원수",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                              padding: const EdgeInsets.all(6),
-                              height: 44,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(6),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.all(6),
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(6),
+                                  ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: _indexCurrentOption == 0
+                                          ? const Color(0xff628941)
+                                          : const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
                                 ),
-                                border: Border.all(
-                                    width: 1,
-                                    color: _indexCurrentOption == 0
-                                        ? const Color(0xff628941)
-                                        : const Color(0xffE1E2E5),
-                                    style: BorderStyle.solid),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                      onTap: () => {
-                                            setState(() {
-                                              _indexCurrentOption = 0;
-                                            }),
-                                            _decrementCounter()
-                                          },
-                                      child: Image.asset(
-                                        'lib/images/ic_decre.png',
-                                        fit: BoxFit.contain,
-                                      )),
-                                  Text('$_counter',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium),
-                                  GestureDetector(
-                                      onTap: () => {
-                                            setState(() {
-                                              _indexCurrentOption = 0;
-                                            }),
-                                            _incrementCounter()
-                                          },
-                                      child: Image.asset(
-                                        'lib/images/ic_incre.png',
-                                        fit: BoxFit.contain,
-                                      )),
-                                ],
-                              )),
-                        )
-                      ],
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () => {
+                                              setState(() {
+                                                _indexCurrentOption = 0;
+                                              }),
+                                              _decrementCounter()
+                                            },
+                                        child: Image.asset(
+                                          'lib/images/ic_decre.png',
+                                          fit: BoxFit.contain,
+                                        )),
+                                    Text('$_counter',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium),
+                                    GestureDetector(
+                                        onTap: () => {
+                                              setState(() {
+                                                _indexCurrentOption = 0;
+                                              }),
+                                              _incrementCounter()
+                                            },
+                                        child: Image.asset(
+                                          'lib/images/ic_incre.png',
+                                          fit: BoxFit.contain,
+                                        )),
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 24,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            "인원수",
-                            style: TextStyle(
-                                color: Color(0xff0A0A0A),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "버스",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: CupertinoButton(
-                              color: Colors.transparent,
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () => {
-                                    setState(() {
-                                      _indexCurrentOption = 1;
-                                    }),
-                                    showCupertinoModalPopup(
-                                            context: context,
-                                            builder: ((BuildContext builder) {
-                                              return Picker(callback: callback);
-                                            }))
-                                        .whenComplete(() => setState(
-                                            () => _indexCurrentOption = -1))
-                                  },
+                          Expanded(
+                            flex: 2,
+                            child: CupertinoButton(
+                                color: Colors.transparent,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => {
+                                      setState(() {
+                                        _indexCurrentOption = 1;
+                                      }),
+                                      showCupertinoModalPopup(
+                                              context: context,
+                                              builder: ((BuildContext builder) {
+                                                return Picker(
+                                                    callback: callback);
+                                              }))
+                                          .whenComplete(() => setState(
+                                              () => _indexCurrentOption = -1))
+                                    },
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: _indexCurrentOption == 1
+                                            ? const Color(0xff628941)
+                                            : const Color(0xffE1E2E5),
+                                        style: BorderStyle.solid),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(6),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                        (_busName ?? '버스 노선 번호를 선택해 주세요.'),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: _busName == null
+                                                ? const Color(0xffA3A5AE)
+                                                : Colors.black),
+                                      )),
+                                      _indexCurrentOption == 1
+                                          ? const Icon(
+                                              Icons.arrow_drop_up,
+                                              color: Colors.black,
+                                            )
+                                          : const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black,
+                                            ),
+                                    ],
+                                  ),
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "정류장",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: GestureDetector(
+                              onTap: () => _busName != null
+                                  ? _navigateAndShowStation(context)
+                                  : {},
                               child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(6),
+                                    ),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xffE1E2E5),
+                                        style: BorderStyle.solid),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                        (_stationName ?? "선택"),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium
+                                            ?.copyWith(
+                                                color: _stationName != null
+                                                    ? const Color(0xff090A0B)
+                                                    : const Color(0xffA3A5AE)),
+                                      )),
+                                      (_stationName != null
+                                          ? Image.asset(
+                                              'lib/images/ic_detail_active.png',
+                                              fit: BoxFit.contain,
+                                              width: 22,
+                                              height: 22,
+                                            )
+                                          : Image.asset(
+                                              'lib/images/ic_detail.png',
+                                              fit: BoxFit.contain,
+                                              width: 22,
+                                              height: 22,
+                                            ))
+                                    ],
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "교통 약자",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: GestureDetector(
+                              onTap: () => setState(() {
+                                setState(() {
+                                  _indexCurrentOption = 3;
+                                });
+                              }),
+                              child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(6),
+                                    ),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: _indexCurrentOption == 3
+                                            ? const Color(0xff628941)
+                                            : const Color(0xffE1E2E5),
+                                        style: BorderStyle.solid),
+                                  ),
+                                  child: Row(children: [
+                                    Expanded(
+                                        child: Text(
+                                      typeTransportation
+                                          .firstWhere(
+                                              (element) => element.isChecked!)
+                                          .title
+                                          .toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
+                                    )),
+                                    _indexCurrentOption == 3
+                                        ? const Icon(
+                                            Icons.arrow_drop_up,
+                                            color: Colors.black,
+                                          )
+                                        : const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.black,
+                                          ),
+                                  ])),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "결제 선택",
+                              style: TextStyle(
+                                  color: Color(0xff0A0A0A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
                                 padding: const EdgeInsets.all(6),
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1,
-                                      color: _indexCurrentOption == 1
-                                          ? const Color(0xff628941)
-                                          : const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(6),
                                   ),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: _indexCurrentOption == 4
+                                          ? const Color(0xff628941)
+                                          : const Color(0xffE1E2E5),
+                                      style: BorderStyle.solid),
                                 ),
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: Text(
-                                      (_busName ?? '버스 노선 번호를 선택해 주세요.'),
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: _busName == null
-                                              ? const Color(0xffA3A5AE)
-                                              : Colors.black),
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _indexCurrentOption = 4;
+                                        });
+                                      },
+                                      child: Text(
+                                        "---",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      ),
                                     )),
-                                    _indexCurrentOption == 1
+                                    _indexCurrentOption == 4
                                         ? const Icon(
                                             Icons.arrow_drop_up,
                                             color: Colors.black,
@@ -505,198 +712,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                             color: Colors.black,
                                           ),
                                   ],
-                                ),
-                              )),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            "정류장",
-                            style: TextStyle(
-                                color: Color(0xff0A0A0A),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: GestureDetector(
-                            onTap: () => _busName != null
-                                ? _navigateAndShowStation(context)
-                                : {},
-                            child: Container(
-                                padding: const EdgeInsets.all(6),
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text(
-                                      (_stationName ?? "선택"),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
-                                          ?.copyWith(
-                                              color: _stationName != null
-                                                  ? const Color(0xff090A0B)
-                                                  : const Color(0xffA3A5AE)),
-                                    )),
-                                    (_stationName != null
-                                        ? Image.asset(
-                                            'lib/images/ic_detail_active.png',
-                                            fit: BoxFit.contain,
-                                            width: 22,
-                                            height: 22,
-                                          )
-                                        : Image.asset(
-                                            'lib/images/ic_detail.png',
-                                            fit: BoxFit.contain,
-                                            width: 22,
-                                            height: 22,
-                                          ))
-                                  ],
                                 )),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            "교통 약자",
-                            style: TextStyle(
-                                color: Color(0xff0A0A0A),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: GestureDetector(
-                            onTap: () => setState(() {
-                              setState(() {
-                                _indexCurrentOption = 3;
-                              });
-                            }),
-                            child: Container(
-                                padding: const EdgeInsets.all(6),
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: _indexCurrentOption == 3
-                                          ? const Color(0xff628941)
-                                          : const Color(0xffE1E2E5),
-                                      style: BorderStyle.solid),
-                                ),
-                                child: Row(children: [
-                                  Expanded(
-                                      child: Text(
-                                    typeTransportation
-                                        .firstWhere(
-                                            (element) => element.isChecked!)
-                                        .title
-                                        .toString(),
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  )),
-                                  _indexCurrentOption == 3
-                                      ? const Icon(
-                                          Icons.arrow_drop_up,
-                                          color: Colors.black,
-                                        )
-                                      : const Icon(
-                                          Icons.arrow_drop_down,
-                                          color: Colors.black,
-                                        ),
-                                ])),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            "결제 선택",
-                            style: TextStyle(
-                                color: Color(0xff0A0A0A),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
+                    Visibility(
+                      visible: _indexCurrentOption == 4,
+                      child: Expanded(
                           child: Container(
-                              padding: const EdgeInsets.all(6),
-                              height: 44,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(6),
-                                ),
-                                border: Border.all(
-                                    width: 1,
-                                    color: _indexCurrentOption == 4
-                                        ? const Color(0xff628941)
-                                        : const Color(0xffE1E2E5),
-                                    style: BorderStyle.solid),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _indexCurrentOption = 4;
-                                      });
-                                    },
-                                    child: Text(
-                                      "---",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                    ),
-                                  )),
-                                  _indexCurrentOption == 4
-                                      ? const Icon(
-                                          Icons.arrow_drop_up,
-                                          color: Colors.black,
-                                        )
-                                      : const Icon(
-                                          Icons.arrow_drop_down,
-                                          color: Colors.black,
-                                        ),
-                                ],
-                              )),
-                        )
-                      ],
+                        margin: EdgeInsets.only(top: 32),
+                        decoration: const BoxDecoration(
+                            color: Color(0xffE1E2E5),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(24),
+                                topRight: Radius.circular(24))),
+                        child: Center(
+                          child: Image.asset(
+                            'lib/images/ic_rfid.png',
+                            fit: BoxFit.contain,
+                            width: 152,
+                            height: 154,
+                          ),
+                        ),
+                      )),
                     ),
                   ],
                 ),
