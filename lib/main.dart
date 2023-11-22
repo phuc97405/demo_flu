@@ -77,13 +77,51 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// class Person {
+//   final String name;
+
+//   Person(
+//     this.name,
+//   ); //contructor
+
+//   void printName() {
+//     //method
+//     print(name);
+//   }
+// }
+
+// class Cat extends Object {
+//   final String name;
+
+//   Cat(this.name);
+//   @override
+//   bool operator ==(covariant Cat other) => other.name == name;
+
+//   @override
+//   int get hashCode => name.hashCode;
+
+//   // factory Cat.hello() {
+//   //   return Cat('goodbye');
+//   // }
+// }
+
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _counter = 0;
   String? _busName;
   String? _stationName;
   int _indexCurrentOption = -1;
+
+  // void test() {
+  //   final cat1 = Cat('Foo');
+  //   final cat2 = Cat('Foo');
+  //   if (cat1 == cat2) {
+  //     print('they qra equal');
+  //   } else {
+  //     print('They are not equal');
+  //   }
+  // }
 
   List<Transportation> typeTransportation = [
     Transportation(title: "예", isChecked: true, id: 0),
@@ -245,8 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     if (!mounted) return;
     setState(() {
-      if (stationName.toString().isNotEmpty)
-        _stationName = stationName.toString();
+      if (stationName != null) _stationName = '$stationName';
     });
     // ScaffoldMessenger.of(context)
     //   ..removeCurrentSnackBar()
@@ -256,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
-
+    // test();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -447,7 +484,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 24,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -497,6 +534,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Expanded(
                                           child: Text(
                                         (_busName ?? '버스 노선 번호를 선택해 주세요.'),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: _busName == null
@@ -523,7 +562,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 24,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -591,7 +630,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 24,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -657,7 +696,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 24,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -721,7 +760,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       visible: _indexCurrentOption == 4,
                       child: Expanded(
                           child: Container(
-                        margin: EdgeInsets.only(top: 32),
+                        margin: const EdgeInsets.only(top: 32),
                         decoration: const BoxDecoration(
                             color: Color(0xffE1E2E5),
                             borderRadius: BorderRadius.only(
@@ -752,7 +791,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: BoxDecoration(
                             border: Border.all(
                               width: 1,
-                              color: Color(0xffE1E2E5),
+                              color: const Color(0xffE1E2E5),
                             ),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(6))),
@@ -770,8 +809,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                         if (element.id !=
                                             typeTransportation[index].id) {
                                           element.isChecked = false;
-                                        } else
+                                        } else {
                                           element.isChecked = true;
+                                        }
                                       });
                                     }),
                                     child: Container(

@@ -9,7 +9,7 @@ class Station extends StatefulWidget {
 
 class _StationState extends State<Station> {
   int indexItemSelected = -1;
-  List listStation = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  final List listStation = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class _StationState extends State<Station> {
                           decoration: BoxDecoration(
                               border: Border(
                                   left: BorderSide(
-                                      color: index > indexItemSelected &&
+                                      color: index >= indexItemSelected &&
                                               indexItemSelected > -1
                                           ? const Color(0xffAFDF7B)
                                           : const Color(0xffE1E2E5),

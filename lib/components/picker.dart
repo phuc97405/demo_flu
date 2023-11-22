@@ -22,40 +22,38 @@ class Picker extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24), topRight: Radius.circular(24))),
-      child: Expanded(
-        child: Column(mainAxisSize: MainAxisSize.max, children: [
-          const Expanded(
-              flex: 2,
-              child: Center(
-                  child: DefaultTextStyle(
-                style: TextStyle(
-                    color: Color(0xff090A0B),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
-                child: Text('버스'),
-              ))),
-          const Divider(
-            color: Colors.black12,
+      child: Column(mainAxisSize: MainAxisSize.max, children: [
+        const Expanded(
+            flex: 2,
+            child: Center(
+                child: DefaultTextStyle(
+              style: TextStyle(
+                  color: Color(0xff090A0B),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
+              child: Text('버스'),
+            ))),
+        const Divider(
+          color: Colors.black12,
+        ),
+        Expanded(
+          flex: 8,
+          child: CupertinoPicker(
+            backgroundColor: Colors.white,
+            itemExtent: 28,
+            scrollController: FixedExtentScrollController(initialItem: 3),
+            children: List.generate(
+                _fruitNames.length,
+                (index) => Text(
+                      _fruitNames[index],
+                      style: Theme.of(context).textTheme.labelLarge,
+                    )).toList(),
+            onSelectedItemChanged: (int value) {
+              callback!(_fruitNames[value]);
+            },
           ),
-          Expanded(
-            flex: 8,
-            child: CupertinoPicker(
-              backgroundColor: Colors.white,
-              itemExtent: 28,
-              scrollController: FixedExtentScrollController(initialItem: 3),
-              children: List.generate(
-                  _fruitNames.length,
-                  (index) => Text(
-                        _fruitNames[index],
-                        style: Theme.of(context).textTheme.labelLarge,
-                      )).toList(),
-              onSelectedItemChanged: (int value) {
-                callback!(_fruitNames[value]);
-              },
-            ),
-          )
-        ]),
-      ),
+        )
+      ]),
     );
   }
 }
