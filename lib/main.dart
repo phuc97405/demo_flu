@@ -2,7 +2,6 @@ import 'package:demo_flu/components/picker.dart';
 import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'models/Transportation.dart';
 
