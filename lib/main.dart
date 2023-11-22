@@ -1,4 +1,5 @@
 import 'package:demo_flu/components/picker.dart';
+import 'package:demo_flu/pages/SplashScreen.dart';
 import 'package:demo_flu/pages/signin.dart';
 import 'package:demo_flu/pages/station.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          '/': (context) => const SignIn(),
-          '/station': (context) => Station()
+          '/': (context) => const SplashScreen(),
+          '/station': (context) => Station(),
+          '/login': (context) => const SignIn()
         },
         theme: ThemeData(
           useMaterial3: true,
