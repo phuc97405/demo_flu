@@ -1,5 +1,6 @@
 import 'package:demo_flu/pages/auth_page.dart';
 import 'package:demo_flu/pages/home_page.dart';
+import 'package:demo_flu/pages/login_or_register.dart';
 import 'package:demo_flu/pages/splash_screen.dart';
 import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: const SplashScreen(),
-        // initialRoute: '/',
-        // routes: {
-        //   '/': (context) => const SplashScreen(),
-        // '/authen': (context) => const AuthPage(),
-        // '/home': (context) => const HomePage(),
-        // '/station': (context) => const Station(),
-        // },
+        // home: const SplashScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashScreen(),
+          '/authen': (context) => const AuthPage(),
+          '/home': (context) => const HomePage(),
+          '/station': (context) => const Station(),
+          '/login_or_register': (context) => const LoginOrRegister()
+        },
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: const ColorScheme(

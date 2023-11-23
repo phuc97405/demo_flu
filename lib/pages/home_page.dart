@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.signOut();
+    // FirebaseAuth.instance.signOut();
     double widthScreen = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 2,
