@@ -37,13 +37,8 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      if (e.code == 'user-not-found') {
-        showErrorMessage('Email is wrong.');
-        // print('No user found for that email');
-      } else if (e.code == 'wrong-password') {
-        showErrorMessage('Password is wrong.');
-        // print('Wrong password provided for that user');
-      }
+      showErrorMessage(e.code);
+      // print('No user found for that email');
     }
   }
 

@@ -17,36 +17,6 @@ class _LoginState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  createAccount() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Dialog(
-            backgroundColor: Colors.transparent,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [CircularProgressIndicator()]),
-          );
-        });
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-    } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('the currenr user is not authorized'),
-              actions: [
-                ElevatedButton(onPressed: () {}, child: const Text('ok'))
-              ],
-            );
-          });
-    }
-  }
-
   void signUserIn() async {
     showDialog(
         context: context,

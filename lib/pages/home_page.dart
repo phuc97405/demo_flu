@@ -153,9 +153,9 @@ class _HomePageState extends State<HomePage> {
               ),
               const Divider(),
               ListTile(
-                title: const Text("Close"),
+                title: const Text("Log Out"),
                 trailing: const Icon(Icons.close),
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => FirebaseAuth.instance.signOut(),
               ),
             ],
           ),
