@@ -22,6 +22,8 @@ class _StationState extends State<Station> {
 
   @override
   Widget build(BuildContext context) {
+    final _busName = ModalRoute.of(context)?.settings.arguments as Name;
+    // print(_busName.);
     return Scaffold(
         resizeToAvoidBottomInset: false, // set it to false
         appBar: AppBar(
