@@ -1,4 +1,4 @@
-import 'package:demo_flu/pages/station.dart';
+import 'package:demo_flu/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,9 +17,11 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(seconds: 2), () {
-      // Navigator.of(context)
-      //     .pushReplacement(MaterialPageRoute(builder: (_) => Station()));
-      Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => LoginPage(
+                onTap: () {},
+              )));
+      // Navigator.of(context).pushReplacementNamed('/authen');
     });
   }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582871296985",
+    "project_id": "demoflutter-1a6a9",
+    "storage_bucket": "demoflutter-1a6a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582871296985:android:1aa08dc7800c52695087c8",
+        "android_client_info": {
+          "package_name": "com.example.demoflu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo4ASf0pUfS5N3SfZxhhggqUUWn_EfyiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
