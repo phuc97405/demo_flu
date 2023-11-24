@@ -1,9 +1,13 @@
 import 'package:demo_flu/components/my_button.dart';
 import 'package:demo_flu/components/my_textfield.dart';
 import 'package:demo_flu/components/square_tile.dart';
-import 'package:demo_flu/services/authen_service.dart';
+import 'package:demo_flu/core/utils/get_storage_key.dart';
+import 'package:demo_flu/services/data/provider/my_api_provider.dart';
+import 'package:demo_flu/services/data/repository/repository.dart';
+import 'package:demo_flu/services/navigation/authen_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -14,8 +18,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(text: '08422222222');
+  final passwordController = TextEditingController(text: '11111111');
+  final repository = Repository(MyApiProvide());
+  final _getStorage = GetStorage();
 
   void signUserIn() async {
     showDialog(
@@ -53,6 +59,37 @@ class _LoginState extends State<LoginPage> {
             ),
           );
         });
+  }
+
+  void loginNormal() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+    try {
+      Map<String, String> data = {
+        'phone': emailController.text,
+        'password': passwordController.text
+      };
+      repository
+          .login(data)
+          .then((value) => {
+                Navigator.pop(context),
+                print('value then:  $value'),
+                _getStorage.write(
+                    (GetStorageKey.accessToken), value.accessToken),
+                _getStorage.write(
+                    (GetStorageKey.refreshToken), value.refreshToken)
+              })
+          .onError((error, stackTrace) =>
+              {Navigator.pop(context), showErrorMessage(error.toString())});
+    } catch (e) {
+      Navigator.pop(context);
+      showErrorMessage(e.toString());
+    }
   }
 
   @override
@@ -103,10 +140,9 @@ class _LoginState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              MyButton(
-                labelSubmit: 'Sign In',
-                onTap: signUserIn,
-              ),
+              MyButton(labelSubmit: 'Sign In', onTap: loginNormal
+                  // signUserIn,
+                  ),
               const SizedBox(height: 30),
 
               Padding(

@@ -1,5 +1,5 @@
-import 'package:demo_flu/pages/login_or_register.dart';
-import 'package:demo_flu/pages/home_page.dart';
+import 'package:demo_flu/modules/login_or_register.dart';
+import 'package:demo_flu/modules/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

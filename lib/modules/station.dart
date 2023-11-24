@@ -1,4 +1,4 @@
-import 'package:demo_flu/pages/detail_station.dart';
+import 'package:demo_flu/modules/detail_station.dart';
 import 'package:demo_flu/models/User.dart';
 import 'package:flutter/material.dart';
 

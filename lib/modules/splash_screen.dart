@@ -1,4 +1,4 @@
-import 'package:demo_flu/pages/auth_page.dart';
+import 'package:demo_flu/modules/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

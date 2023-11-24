@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:demo_flu/core/utils/get_storage_key.dart';
-import 'package:demo_flu/models/token_model.dart';
+import 'package:demo_flu/services/data/model/token_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -49,8 +51,10 @@ class MyApiProvide {
   Future<TokenModel> login(Map<String, dynamic> map) async {
     try {
       final res = await _dio.post('/authentication/login', data: map);
-      print('res: $res');
-      return tokenModelFromJson(res.toString());
+      final json = jsonDecode(res.toString());
+
+      print('running: ${json['data']['token']}');
+      return tokenModelFromJson(jsonEncode(json['data']['token']));
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
         return Future.error("Invalid Credential");

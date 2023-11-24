@@ -1,12 +1,12 @@
-import 'package:demo_flu/pages/auth_page.dart';
-import 'package:demo_flu/pages/home_page.dart';
-import 'package:demo_flu/pages/login_or_register.dart';
-import 'package:demo_flu/pages/splash_screen.dart';
+import 'package:demo_flu/modules/auth_page.dart';
+import 'package:demo_flu/modules/home_page.dart';
+import 'package:demo_flu/modules/login_or_register.dart';
+import 'package:demo_flu/modules/splash_screen.dart';
 import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'services/firebase/firebase_options.dart';
 
 enum ColorE { red, green, blue }
 
@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         // home: const SplashScreen(),
         initialRoute: '/',
+        debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => const SplashScreen(),
           '/authen': (context) => const AuthPage(),

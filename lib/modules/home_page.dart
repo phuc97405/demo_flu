@@ -1,6 +1,8 @@
 import 'package:demo_flu/components/picker.dart';
 import 'package:demo_flu/models/Transportation.dart';
 import 'package:demo_flu/models/User.dart';
+import 'package:demo_flu/services/data/provider/my_api_provider.dart';
+import 'package:demo_flu/services/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +119,13 @@ class _HomePageState extends State<HomePage> {
     // ScaffoldMessenger.of(context)
     //   ..removeCurrentSnackBar()
     //   ..showSnackBar(SnackBar(content: Text('$')));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // MyApiProvide().login({'phone': '08422222222', 'password': '11111111'});
   }
 
   @override
@@ -279,11 +288,14 @@ class _HomePageState extends State<HomePage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                        onTap: () => {
+                                        onTap: () async => {
                                               setState(() {
                                                 _indexCurrentOption = 0;
                                               }),
-                                              _decrementCounter()
+                                              //  final res = Repository(myApiProvider).login({
+                                              //     'phone': '08422222222',
+                                              //     'password': '11111111'
+                                              //   })
                                             },
                                         child: Image.asset(
                                           'lib/images/ic_decre.png',

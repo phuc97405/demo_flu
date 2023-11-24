@@ -1,7 +1,7 @@
 import 'package:demo_flu/components/my_button.dart';
 import 'package:demo_flu/components/my_textfield.dart';
 import 'package:demo_flu/components/square_tile.dart';
-import 'package:demo_flu/services/authen_service.dart';
+import 'package:demo_flu/services/navigation/authen_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
