@@ -8,7 +8,7 @@ import 'package:get_storage/get_storage.dart';
 class MyApiProvide {
   final GetStorage _getStorage = GetStorage();
   final Dio _dio = Dio(BaseOptions(
-      baseUrl: "https://api-mildang.brickmate.kr/api/v1",
+      baseUrl: "https://api-mildang.brickmate.kr/api/v1/",
       connectTimeout: const Duration(seconds: 6000),
       receiveTimeout: const Duration(seconds: 6000),
       responseType: ResponseType.json,
@@ -36,8 +36,8 @@ class MyApiProvide {
   Future<String?> refreshToken() async {
     try {
       final refreshToken = _getStorage.read(GetStorageKey.refreshToken);
-      final response =
-          await _dio.post('refreshToken', data: {'refreshToken': refreshToken});
+      final response = await _dio.post('/authentication/refresh',
+          data: {'refreshToken': refreshToken});
       final newAccessToken = response.data['accessToken'];
       _getStorage.write(GetStorageKey.accessToken, newAccessToken);
       return newAccessToken;
@@ -50,7 +50,7 @@ class MyApiProvide {
 
   Future<TokenModel> login(Map<String, dynamic> map) async {
     try {
-      final res = await _dio.post('/authentication/login', data: map);
+      final res = await _dio.post('authentication/login', data: map);
       final json = jsonDecode(res.toString());
 
       print('running: ${json['data']['token']}');

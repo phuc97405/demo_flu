@@ -78,11 +78,11 @@ class _LoginState extends State<LoginPage> {
           .login(data)
           .then((value) => {
                 Navigator.pop(context),
-                print('value then:  $value'),
                 _getStorage.write(
                     (GetStorageKey.accessToken), value.accessToken),
                 _getStorage.write(
-                    (GetStorageKey.refreshToken), value.refreshToken)
+                    (GetStorageKey.refreshToken), value.refreshToken),
+                Navigator.pushReplacementNamed(context, '/home'),
               })
           .onError((error, stackTrace) =>
               {Navigator.pop(context), showErrorMessage(error.toString())});

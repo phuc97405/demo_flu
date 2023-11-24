@@ -1,6 +1,8 @@
+import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/modules/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,8 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(seconds: 2), () {
-      // Navigator.of(context)
-      //     .pushReplacement(MaterialPageRoute(builder: (_) => const AuthPage()));
       Navigator.of(context).pushReplacementNamed('/authen');
     });
   }

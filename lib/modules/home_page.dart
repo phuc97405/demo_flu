@@ -1,11 +1,13 @@
 import 'package:demo_flu/components/picker.dart';
 import 'package:demo_flu/models/Transportation.dart';
 import 'package:demo_flu/models/User.dart';
+import 'package:demo_flu/modules/login/login_page.dart';
 import 'package:demo_flu/services/data/provider/my_api_provider.dart';
 import 'package:demo_flu/services/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final _getStorage = GetStorage();
   int _counter = 0;
   String? _busName;
   String? _stationName;
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     Transportation(title: "아니요", isChecked: false, id: 1)
   ];
 
-  final user = FirebaseAuth.instance.currentUser!;
+  // final user = FirebaseAuth.instance.currentUser!;
 
   void _incrementCounter() {
     setState(() {
@@ -162,10 +164,15 @@ class _HomePageState extends State<HomePage> {
               ),
               const Divider(),
               ListTile(
-                title: const Text("Log Out"),
-                trailing: const Icon(Icons.close),
-                onTap: () => FirebaseAuth.instance.signOut(),
-              ),
+                  title: const Text("Log Out"),
+                  trailing: const Icon(Icons.close),
+                  onTap: () => {
+                        _getStorage.erase(),
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/authen', (route) => false)
+                      }
+                  // FirebaseAuth.instance.signOut(),
+                  ),
             ],
           ),
         ),

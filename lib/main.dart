@@ -1,9 +1,11 @@
+import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/modules/auth_page.dart';
 import 'package:demo_flu/modules/home_page.dart';
 import 'package:demo_flu/modules/login_or_register.dart';
 import 'package:demo_flu/modules/splash_screen.dart';
 import 'package:demo_flu/station.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/firebase/firebase_options.dart';
@@ -13,17 +15,18 @@ enum ColorE { red, green, blue }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _getStorage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         // home: const SplashScreen(),
-        initialRoute: '/',
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => const SplashScreen(),
