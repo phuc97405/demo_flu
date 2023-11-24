@@ -1,6 +1,6 @@
 import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/modules/login_or_register.dart';
-import 'package:demo_flu/modules/home_page.dart';
+import 'package:demo_flu/modules/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,7 +16,7 @@ class AuthPage extends StatelessWidget {
     if (_getStorage.read(GetStorageKey.accessToken) == null) {
       return const LoginOrRegister();
     } else {
-      return const HomePage(); //     StreamBuilder<User?>(
+      return HomeView(); //     StreamBuilder<User?>(
     }
     //   stream: _getStorage.read(GetStorageKey.accessToken),
     //   // FirebaseAuth.instance.authStateChanges(),

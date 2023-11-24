@@ -1,5 +1,5 @@
+import 'package:demo_flu/modules/login/login_view.dart';
 import 'package:demo_flu/modules/register_page.dart';
-import 'package:demo_flu/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrRegister extends StatefulWidget {
@@ -20,7 +20,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginPage(onTap: togglePages);
+      return LoginView(onTap: togglePages);
     } else {
       return RegisterPage(
         onTap: togglePages,

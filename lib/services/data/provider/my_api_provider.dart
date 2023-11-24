@@ -53,7 +53,7 @@ class MyApiProvide {
       final res = await _dio.post('authentication/login', data: map);
       final json = jsonDecode(res.toString());
 
-      print('running: ${json['data']['token']}');
+      // print('running: ${json['data']['token']}');
       return tokenModelFromJson(jsonEncode(json['data']['token']));
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
