@@ -7,4 +7,6 @@ class Repository {
 
   Future<TokenModel> login(Map<String, dynamic> map) =>
       myApiProvider.login(map);
+
+  // Future<UserModel> getProfile() => myApiProvider.getProfile();
 }
