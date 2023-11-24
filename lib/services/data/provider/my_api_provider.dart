@@ -66,12 +66,41 @@ class MyApiProvide {
     }
   }
 
-  Future<dynamic> post<T>(String url, Object param, Object body) async {
+  Future<Object> post<T>(String url, T body,
+      [Map<String, dynamic>? headers]) async {
     try {
-      final res = await _dio.post(
-        url,
-        data: param,
-      );
+      final res = await _dio.post(url, data: body, queryParameters: headers);
+      return res;
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        return Future.error("Invalid Credential");
+      } else {
+        return Future.error("Internal Server Error");
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
+
+  Future<Object> get(String url, [Map<String, dynamic>? headers]) async {
+    try {
+      final res = await _dio.get(url, queryParameters: headers);
+      return res;
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        return Future.error("Invalid Credential");
+      } else {
+        return Future.error("Internal Server Error");
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
+
+  Future<Object> put<T>(String url, T body,
+      [Map<String, dynamic>? headers]) async {
+    try {
+      final res = await _dio.put(url, data: body, queryParameters: headers);
       return res;
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {

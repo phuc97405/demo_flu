@@ -1,5 +1,6 @@
 import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/routes/app_pages.dart';
+import 'package:demo_flu/services/data/provider/authen_api/authen_api.dart';
 import 'package:demo_flu/services/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +16,21 @@ class LoginController extends GetxController {
   // final repository = Repository(MyApiProvide());
   final _getStorage = GetStorage();
   var useId = ''.obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
   }
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
+    AuthenApi().loginApi();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 
@@ -59,6 +59,13 @@ class LoginController extends GetxController {
   }
 
   void showErrorMessage(String msg) {
+    Get.defaultDialog(
+        title: "Notice",
+        middleText: msg,
+        backgroundColor: Colors.red,
+        titleStyle: const TextStyle(color: Colors.white),
+        middleTextStyle: const TextStyle(color: Colors.white),
+        radius: 30);
     // showDialog(
     //     context: context,
     //     builder: (context) {
@@ -73,34 +80,26 @@ class LoginController extends GetxController {
   }
 
   void loginNormal() {
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return const Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     });
+    isLoading.value = true;
     try {
       Map<String, String> data = {
         'phone': emailController.text,
         'password': passwordController.text
       };
-      print(data);
       repository
           .login(data)
           .then((value) => {
-                // Navigator.pop(context),
                 _getStorage.write(
                     (GetStorageKey.accessToken), value.accessToken),
                 _getStorage.write(
                     (GetStorageKey.refreshToken), value.refreshToken),
+                isLoading.value = false,
                 Get.offAllNamed(Routes.home)
-                // Navigator.pushReplacementNamed(context, '/home'),
               })
-          .onError((error, stackTrace) => {});
-      // {Navigator.pop(context), showErrorMessage(error.toString())});
+          .onError((error, stackTrace) => {isLoading.value = false});
+      // showErrorMessage(error.toString())});
     } catch (e) {
-      // Navigator.pop(context);
+      isLoading.value = false;
       showErrorMessage(e.toString());
     }
   }

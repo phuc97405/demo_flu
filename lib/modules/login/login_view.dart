@@ -1,86 +1,14 @@
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:demo_flu/components/my_button.dart';
-import 'package:demo_flu/components/my_textfield.dart';
 import 'package:demo_flu/components/square_tile.dart';
+import 'package:demo_flu/components/my_textfield.dart';
 import 'package:demo_flu/modules/login/login_controller.dart';
 import 'package:demo_flu/services/navigation/authen_service.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoginView extends GetView<LoginController> {
   final Function()? onTap;
   const LoginView({super.key, this.onTap});
-// final emailController = TextEditingController(text: '08422222222');
-// final passwordController = TextEditingController(text: '11111111');
-// final repository = Repository(MyApiProvide());
-// final _getStorage = GetStorage();
-
-// void signUserIn() async {
-//   showDialog(
-//       context: context,
-//       builder: (context) {
-//         return const Center(
-//           child: CircularProgressIndicator(),
-//         );
-//       });
-//   try {
-//     await FirebaseAuth.instance.signInWithEmailAndPassword(
-//         email: emailController.text, password: passwordController.text);
-//     Navigator.pop(context);
-//   } on FirebaseAuthException catch (e) {
-//     Navigator.pop(context);
-//     if (e.code == 'user-not-found') {
-//       showErrorMessage('Email is wrong.');
-//       // print('No user found for that email');
-//     } else if (e.code == 'wrong-password') {
-//       showErrorMessage('Password is wrong.');
-//       // print('Wrong password provided for that user');
-//     }
-//   }
-// }
-
-// void showErrorMessage(String msg) {
-//   showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           backgroundColor: Colors.purple,
-//           title: Text(
-//             msg,
-//             style: const TextStyle(color: Colors.white),
-//           ),
-//         );
-//       });
-// }
-
-// void loginNormal() {
-//   showDialog(
-//       context: context,
-//       builder: (context) {
-//         return const Center(
-//           child: CircularProgressIndicator(),
-//         );
-//       });
-//   try {
-//     Map<String, String> data = {
-//       'phone': emailController.text,
-//       'password': passwordController.text
-//     };
-//     repository
-//         .login(data)
-//         .then((value) => {
-//               Navigator.pop(context),
-//               _getStorage.write((GetStorageKey.accessToken), value.accessToken),
-//               _getStorage.write(
-//                   (GetStorageKey.refreshToken), value.refreshToken),
-//               Navigator.pushReplacementNamed(context, '/home'),
-//             })
-//         .onError((error, stackTrace) =>
-//             {Navigator.pop(context), showErrorMessage(error.toString())});
-//   } catch (e) {
-//     Navigator.pop(context);
-//     showErrorMessage(e.toString());
-//   }
-// }
 
   @override
   Widget build(BuildContext context) {
