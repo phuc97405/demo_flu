@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class LoginView extends GetView<LoginController> {
   final Function()? onTap;
-  const LoginView({super.key, required this.onTap});
+  const LoginView({super.key, this.onTap});
 // final emailController = TextEditingController(text: '08422222222');
 // final passwordController = TextEditingController(text: '11111111');
 // final repository = Repository(MyApiProvide());

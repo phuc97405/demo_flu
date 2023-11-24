@@ -65,4 +65,22 @@ class MyApiProvide {
       return Future.error(exception.toString());
     }
   }
+
+  Future<dynamic> post<T>(String url, Object param, Object body) async {
+    try {
+      final res = await _dio.post(
+        url,
+        data: param,
+      );
+      return res;
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        return Future.error("Invalid Credential");
+      } else {
+        return Future.error("Internal Server Error");
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
 }

@@ -1,22 +1,16 @@
-import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'services/firebase/firebase_options.dart';
 
 void main() async {
   await GetStorage.init();
   final _getStorage = GetStorage();
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(GetMaterialApp(
     title: 'Bus App',
-    initialRoute: _getStorage.read(GetStorageKey.accessToken) == null
-        ? AppPages.initial
-        : AppPages.home,
+    initialRoute: AppPages.initial,
     getPages: AppPages.routes,
     theme: ThemeData(
         useMaterial3: true,
