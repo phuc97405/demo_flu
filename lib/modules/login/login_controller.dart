@@ -88,10 +88,10 @@ class LoginController extends GetxController {
           .login(params)
           .then((value) => {
                 print(jsonEncode(value)),
-                // _getStorage.write(
-                //     (GetStorageKey.accessToken), value.token.accessToken),
-                // _getStorage.write(
-                //     (GetStorageKey.refreshToken), value.token.refreshToken),
+                _getStorage.write(
+                    (GetStorageKey.accessToken), value.data.token.accessToken),
+                _getStorage.write((GetStorageKey.refreshToken),
+                    value.data.token.refreshToken),
                 isLoading.value = false,
                 Get.offAllNamed(Routes.home)
               })
