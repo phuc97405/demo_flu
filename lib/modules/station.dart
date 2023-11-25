@@ -17,12 +17,12 @@ class _StationState extends State<Station> {
   @override
   void initState() {
     super.initState();
-    futureUsers = UserService().getUser();
+    // futureUsers = UserService().getUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _busName = ModalRoute.of(context)?.settings.arguments as Name;
+    final _busName = ModalRoute.of(context)?.settings.arguments;
     // print(_busName.);
     return Scaffold(
         resizeToAvoidBottomInset: false, // set it to false
@@ -56,9 +56,9 @@ class _StationState extends State<Station> {
           // maintainBottomViewPadding: true,
           child: RefreshIndicator(
             onRefresh: () async {
-              var users = await UserService().getUser();
+              // var users = await UserService().getUser();
               setState(() {
-                futureUsers = Future.value(users);
+                // futureUsers = Future.value(users);
               });
             },
             child: Center(
@@ -70,8 +70,8 @@ class _StationState extends State<Station> {
                       itemBuilder: (context, index) {
                         User user = snapshot.data?[index];
                         return ListTile(
-                          title: Text(user.name.first),
-                          subtitle: Text(user.name.last),
+                          title: Text('user.name.first'),
+                          subtitle: Text('user.name.last'),
                           trailing: const Icon(Icons.chevron_right_outlined),
                           onTap: (() => {
                                 Navigator.push(

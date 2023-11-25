@@ -8,20 +8,18 @@ class DetailStation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Text('${user.name.first} ${user.name.last}')),
+      appBar: AppBar(backgroundColor: Colors.green, title: Text('asdd')),
       body: Center(
           child: Column(
         children: [
           const SizedBox(
             height: 30,
           ),
-          Image.network(user.picture),
+          // Image.network(user.data.user),
           const SizedBox(
             height: 30,
           ),
-          Text(user.email)
+          // Text(user.data.user.nickname)
         ],
       )),
     );

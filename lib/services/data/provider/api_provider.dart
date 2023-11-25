@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:demo_flu/core/utils/get_storage_key.dart';
-import 'package:demo_flu/services/data/model/token_model.dart';
+import 'package:demo_flu/models/User.dart';
+import 'package:demo_flu/services/data/model/req_login_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -48,13 +49,12 @@ class MyApiProvide {
     return null;
   }
 
-  Future<TokenModel> login(Map<String, dynamic> map) async {
+  Future<User> post(String url, ReqLoginModel body,
+      [Map<String, dynamic>? headers]) async {
     try {
-      final res = await _dio.post('authentication/login', data: map);
-      final json = jsonDecode(res.toString());
-
-      // print('running: ${json['data']['token']}');
-      return tokenModelFromJson(jsonEncode(json['data']['token']));
+      final res = await _dio.post(url,
+          data: jsonEncode(body), queryParameters: headers);
+      return userFromJson(res.toString());
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
         return Future.error("Invalid Credential");
@@ -66,10 +66,10 @@ class MyApiProvide {
     }
   }
 
-  Future<Object> post<T>(String url, T body,
+  Future<Response<T>> get<T, K>(String url,
       [Map<String, dynamic>? headers]) async {
     try {
-      final res = await _dio.post(url, data: body, queryParameters: headers);
+      final res = await _dio.get<T>(url, queryParameters: headers);
       return res;
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
@@ -82,25 +82,10 @@ class MyApiProvide {
     }
   }
 
-  Future<Object> get(String url, [Map<String, dynamic>? headers]) async {
-    try {
-      final res = await _dio.get(url, queryParameters: headers);
-      return res;
-    } on DioException catch (err) {
-      if (err.response?.statusCode == 401) {
-        return Future.error("Invalid Credential");
-      } else {
-        return Future.error("Internal Server Error");
-      }
-    } catch (exception) {
-      return Future.error(exception.toString());
-    }
-  }
-
-  Future<Object> put<T>(String url, T body,
+  Future<Response<T>> put<T, K>(String url, K body,
       [Map<String, dynamic>? headers]) async {
     try {
-      final res = await _dio.put(url, data: body, queryParameters: headers);
+      final res = await _dio.put<T>(url, data: body, queryParameters: headers);
       return res;
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
