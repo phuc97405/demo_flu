@@ -16,7 +16,7 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController(text: '11111111');
   // final repository = Repository(MyApiProvide());
   final _getStorage = GetStorage();
-  var useId = ''.obs;
+  final useId = '111'.obs;
   RxBool isLoading = false.obs;
 
   @override

@@ -10,10 +10,14 @@ class HomeController extends GetxController {
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final getStorage = GetStorage();
-  RxInt counter = 0.obs;
-  RxString busName = ''.obs;
-  RxString stationName = ''.obs;
-  RxInt indexCurrentOption = 0.obs;
+  // RxInt counter = 0.obs;
+  // RxString busName = ''.obs;
+  // RxString stationName = ''.obs;
+  // RxInt indexCurrentOption = 0.obs;
+  var counter = RxInt(0);
+  var busName = RxString('');
+  var stationName = RxString('');
+  var indexCurrentOption = RxInt(0);
 
   RxList<Transportation> typeTransportation = [
     Transportation(title: "예", isChecked: true, id: 0),
