@@ -7,8 +7,9 @@ import 'package:demo_flu/modules/login/login_controller.dart';
 import 'package:demo_flu/services/navigation/authen_service.dart';
 
 class LoginView extends GetView<LoginController> {
-  final Function()? onTap;
-  const LoginView({super.key, this.onTap});
+  const LoginView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +117,7 @@ class LoginView extends GetView<LoginController> {
                     width: 4,
                   ),
                   GestureDetector(
-                    // onTap: widget.onTap,
+                    onTap: controller.goToSignUp,
                     child: const Text(
                       'Register now',
                       style: TextStyle(

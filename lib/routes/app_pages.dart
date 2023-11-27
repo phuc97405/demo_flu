@@ -2,6 +2,8 @@ import 'package:demo_flu/modules/home/home_binding.dart';
 import 'package:demo_flu/modules/home/home_view.dart';
 import 'package:demo_flu/modules/login/login_binding.dart';
 import 'package:demo_flu/modules/login/login_view.dart';
+import 'package:demo_flu/modules/signup/sign_up_view.dart';
+import 'package:demo_flu/modules/signup/signup_binding.dart';
 import 'package:demo_flu/modules/splash/splash_binding.dart';
 import 'package:demo_flu/modules/splash/splash_view.dart';
 import 'package:get/get.dart';
@@ -22,6 +24,10 @@ class AppPages {
         name: _Paths.login,
         page: () => const LoginView(),
         binding: LoginBinding()),
+    GetPage(
+        name: _Paths.signUp,
+        page: () => const SignUpView(),
+        binding: SingUpBinding()),
     GetPage(name: _Paths.home, page: () => HomeView(), binding: HomeBinding()),
     // GetPage(name: _Paths.home)
   ];

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/routes/app_pages.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
@@ -14,9 +12,7 @@ class LoginController extends GetxController {
   LoginController(this.repository);
   final emailController = TextEditingController(text: '08422222222');
   final passwordController = TextEditingController(text: '11111111');
-  // final repository = Repository(MyApiProvide());
   final _getStorage = GetStorage();
-  final useId = '111'.obs;
   RxBool isLoading = false.obs;
 
   @override
@@ -59,7 +55,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void showErrorMessage(String msg) {
+  showErrorMessage(String msg) {
     Get.defaultDialog(
         title: "Notice",
         middleText: msg,
@@ -83,11 +79,12 @@ class LoginController extends GetxController {
   void loginNormal() {
     isLoading.value = true;
     try {
-      final params = ReqLoginModel(phone: '08422222222', password: '11111111');
+      final params = ReqLoginModel(
+          phone: emailController.value.text,
+          password: passwordController.value.text);
       repository
           .login(params)
           .then((value) => {
-                print(jsonEncode(value)),
                 _getStorage.write(
                     (GetStorageKey.accessToken), value.data.token.accessToken),
                 _getStorage.write((GetStorageKey.refreshToken),
@@ -96,7 +93,7 @@ class LoginController extends GetxController {
                 Get.offAllNamed(Routes.home)
               })
           .onError((error, stackTrace) => {
-                print(jsonEncode(error)),
+                // print(jsonEncode(error)),
                 showErrorMessage(error.toString()),
                 isLoading.value = false,
               });
@@ -104,5 +101,9 @@ class LoginController extends GetxController {
       isLoading.value = false;
       showErrorMessage(e.toString());
     }
+  }
+
+  goToSignUp() {
+    Get.offAllNamed(Routes.signUp);
   }
 }
