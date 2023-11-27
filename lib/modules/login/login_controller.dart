@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   Repository repository;
   LoginController(this.repository);
-  final phoneController = TextEditingController(text: "08422222222");
+  final phoneController = TextEditingController(text: "08411111111");
   final passwordController = TextEditingController(text: "11111111");
   final _getStorage = GetStorage();
   RxBool isLoading = false.obs;
@@ -67,27 +67,28 @@ class LoginController extends GetxController {
   //       );
   //     });
 
-  void loginNormal() {
+  void loginNormal() async {
     isLoading.value = true;
     try {
       final params = ReqLoginModel(
           phone: phoneController.text, password: passwordController.text);
-      repository
-          .login(params)
-          .then((value) => {
-                _getStorage.write(
-                    (GetStorageKey.accessToken), value.data.token.accessToken),
-                _getStorage.write((GetStorageKey.refreshToken),
-                    value.data.token.refreshToken),
-                isLoading.value = false,
-                Get.offAllNamed(Routes.home)
-              })
-          .onError((error, stackTrace) => {
-                // (error.toString()),
-                showErrorMessage(error.toString()),
-                isLoading.value = false,
-              });
+      final res = await repository.login(params);
+      print('loginNormal$res');
+      // .then((value) => {
+      //       _getStorage.write(
+      //           (GetStorageKey.accessToken), value.data.token.accessToken),
+      //       _getStorage.write((GetStorageKey.refreshToken),
+      //           value.data.token.refreshToken),
+      // isLoading.value = false,
+      // Get.offAllNamed(Routes.home);
+      // })
+      // .onError((error, stackTrace) => {
+      //       // (error.toString()),
+      //       showErrorMessage(error.toString()),
+      //       isLoading.value = false,
+      //     });
     } catch (e) {
+      print(e);
       isLoading.value = false;
       showErrorMessage(e.toString());
     }
