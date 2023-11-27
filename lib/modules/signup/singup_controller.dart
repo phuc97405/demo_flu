@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
-  SignUpController(Repository repository);
+  Repository repository;
+  SignUpController(this.repository);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

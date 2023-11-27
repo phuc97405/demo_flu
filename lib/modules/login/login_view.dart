@@ -35,8 +35,8 @@ class LoginView extends GetView<LoginController> {
                 height: 20,
               ),
               MyTextField(
-                controller: controller.emailController,
-                hintText: 'Email',
+                controller: controller.phoneController,
+                hintText: 'Phone',
                 obscureText: false,
               ),
               const SizedBox(height: 10),
@@ -117,7 +117,7 @@ class LoginView extends GetView<LoginController> {
                     width: 4,
                   ),
                   GestureDetector(
-                    onTap: controller.goToSignUp,
+                    // onTap: controller.goToSignUp,
                     child: const Text(
                       'Register now',
                       style: TextStyle(

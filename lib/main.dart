@@ -1,6 +1,4 @@
 import 'package:demo_flu/routes/app_pages.dart';
-import 'package:demo_flu/services/firebase/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await GetStorage.init();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(GetMaterialApp(
     title: 'Bus App',
     initialRoute: AppPages.initial,
@@ -19,6 +17,7 @@ void main() async {
             brightness: Brightness.dark,
             primary: Color(0xffCADEAF),
             onPrimary: Color(0xff628941),
+            tertiary: Colors.yellow,
             secondary: Colors.blue,
             onSecondary: Colors.blue,
             error: Colors.red,
@@ -30,9 +29,9 @@ void main() async {
             onSurface: Color(0xff628941)),
         textTheme: TextTheme(
           displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 72,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff090A0B)),
           labelLarge: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,

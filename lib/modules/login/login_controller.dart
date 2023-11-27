@@ -1,17 +1,17 @@
 import 'package:demo_flu/core/utils/get_storage_key.dart';
-import 'package:demo_flu/routes/app_pages.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
 import 'package:demo_flu/services/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:demo_flu/routes/app_pages.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   Repository repository;
   LoginController(this.repository);
-  final emailController = TextEditingController(text: '08422222222');
-  final passwordController = TextEditingController(text: '11111111');
+  final phoneController = TextEditingController(text: "08422222222");
+  final passwordController = TextEditingController(text: "11111111");
   final _getStorage = GetStorage();
   RxBool isLoading = false.obs;
 
@@ -32,16 +32,9 @@ class LoginController extends GetxController {
   }
 
   void signUserIn() async {
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return const Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     });
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+          email: phoneController.text, password: passwordController.text);
       // Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // Navigator.pop(context);
@@ -55,33 +48,30 @@ class LoginController extends GetxController {
     }
   }
 
-  showErrorMessage(String msg) {
-    Get.defaultDialog(
-        title: "Notice",
-        middleText: msg,
-        backgroundColor: Colors.red,
-        titleStyle: const TextStyle(color: Colors.white),
-        middleTextStyle: const TextStyle(color: Colors.white),
-        radius: 30);
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         backgroundColor: Colors.purple,
-    //         title: Text(
-    //           msg,
-    //           style: const TextStyle(color: Colors.white),
-    //         ),
-    //       );
-    //     });
-  }
+  showErrorMessage(String msg) => Get.defaultDialog(
+      title: "Notice",
+      middleText: msg,
+      backgroundColor: Colors.red,
+      titleStyle: const TextStyle(color: Colors.white),
+      middleTextStyle: const TextStyle(color: Colors.white),
+      radius: 10);
+  // showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         backgroundColor: Colors.purple,
+  //         title: Text(
+  //           msg,
+  //           style: const TextStyle(color: Colors.white),
+  //         ),
+  //       );
+  //     });
 
   void loginNormal() {
     isLoading.value = true;
     try {
       final params = ReqLoginModel(
-          phone: emailController.value.text,
-          password: passwordController.value.text);
+          phone: phoneController.text, password: passwordController.text);
       repository
           .login(params)
           .then((value) => {
@@ -93,7 +83,7 @@ class LoginController extends GetxController {
                 Get.offAllNamed(Routes.home)
               })
           .onError((error, stackTrace) => {
-                // print(jsonEncode(error)),
+                // (error.toString()),
                 showErrorMessage(error.toString()),
                 isLoading.value = false,
               });

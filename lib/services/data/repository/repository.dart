@@ -1,6 +1,6 @@
-import 'package:demo_flu/models/User.dart';
 import 'package:demo_flu/services/data/provider/api_provider.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
+import 'package:demo_flu/models/User.dart';
 
 class Repository {
   final MyApiProvide myApiProvider;

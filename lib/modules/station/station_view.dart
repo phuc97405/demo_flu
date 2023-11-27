@@ -1,15 +1,16 @@
+import 'package:demo_flu/models/User.dart';
+import 'package:demo_flu/modules/station/station_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Station extends StatefulWidget {
-  const Station({super.key});
+class StationView extends GetView<StationController> {
+  StationView({super.key});
 
-  @override
-  State<Station> createState() => _StationState();
-}
-
-class _StationState extends State<Station> {
   int indexItemSelected = -1;
   final List listStation = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  late Future<List<User>> futureUsers;
+
+  // futureUsers = UserService().getUser();
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +92,7 @@ class _StationState extends State<Station> {
                         )),
                     ListTile(
                       onTap: () {
-                        setState(() {
-                          indexItemSelected = index;
-                        });
+                        indexItemSelected = index;
                       },
                       leading: Image.asset(
                         index == indexItemSelected

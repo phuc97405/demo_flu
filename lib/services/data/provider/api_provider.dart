@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-import 'package:demo_flu/core/utils/get_storage_key.dart';
-import 'package:demo_flu/models/User.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
-import 'package:dio/dio.dart';
+import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:demo_flu/models/User.dart';
+import 'package:dio/dio.dart';
 
 class MyApiProvide {
   final GetStorage _getStorage = GetStorage();
@@ -37,8 +35,8 @@ class MyApiProvide {
   Future<String?> refreshToken() async {
     try {
       final refreshToken = _getStorage.read(GetStorageKey.refreshToken);
-      final response = await _dio.post('/authentication/refresh',
-          data: {'refreshToken': refreshToken});
+      final response = await _dio
+          .post('authentication/refresh', data: {'refreshToken': refreshToken});
       final newAccessToken = response.data['accessToken'];
       _getStorage.write(GetStorageKey.accessToken, newAccessToken);
       return newAccessToken;
@@ -49,11 +47,15 @@ class MyApiProvide {
     return null;
   }
 
-  Future<User> post(String url, ReqLoginModel body,
-      [Map<String, dynamic>? headers]) async {
+  Future<User> post(
+    String url,
+    ReqLoginModel body,
+  ) async {
     try {
-      final res = await _dio.post(url,
-          data: jsonEncode(body), queryParameters: headers);
+      final res = await _dio.post(
+        url,
+        data: reqLoginModelToJson(body),
+      );
       return userFromJson(res.toString());
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {

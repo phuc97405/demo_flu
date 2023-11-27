@@ -14,6 +14,8 @@ class AppPages {
   static const initial = Routes.splash;
   static const home = Routes.home;
   static const login = Routes.login;
+  static const signUp = Routes.signUp;
+
   static final routes = [
     GetPage(
         name: _Paths.splash,
@@ -27,7 +29,7 @@ class AppPages {
     GetPage(
         name: _Paths.signUp,
         page: () => const SignUpView(),
-        binding: SingUpBinding()),
+        binding: SignUpBinding()),
     GetPage(name: _Paths.home, page: () => HomeView(), binding: HomeBinding()),
     // GetPage(name: _Paths.home)
   ];
