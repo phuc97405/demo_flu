@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:demo_flu/models/User.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
 import 'package:demo_flu/core/utils/get_storage_key.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:dio/dio.dart';
 
@@ -50,16 +48,16 @@ class MyApiProvide {
     return null;
   }
 
-  Future<Response<T>> post<T>(
+  Future<Response<T>> post<T, K>(
     String url,
-    ReqLoginModel body,
+    K body,
   ) async {
     try {
       final res = await _dio.post<T>(
         url,
-        data: {"phone": "08411111111", "password": "11111111"},
+        data: jsonEncode(body),
       );
-      return (res);
+      return res;
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
         return Future.error("Invalid Credential");

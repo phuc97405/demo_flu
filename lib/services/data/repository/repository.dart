@@ -7,7 +7,8 @@ class Repository {
   Repository(this.myApiProvider);
 
   Future<User> login(ReqLoginModel param) async {
-    final res = await myApiProvider.post<User>('/authentication/login', param);
+    final res = await myApiProvider.post<User, ReqLoginModel>(
+        '/authentication/login', param);
     print('User$res');
     return userFromJson(res.toString());
   }
