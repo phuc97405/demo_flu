@@ -6,7 +6,7 @@ class Repository {
   final MyApiProvide myApiProvider;
   Repository(this.myApiProvider);
 
-  Future<User> login(ReqLoginModel param) async {
+  Future<User> loginAPi(ReqLoginModel param) async {
     final res = await myApiProvider.post<User, ReqLoginModel>(
         '/authentication/login', param);
     print('User$res');

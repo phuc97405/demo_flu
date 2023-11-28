@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:demo_flu/services/data/model/req_login_model.dart';
 import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:dio/dio.dart';
@@ -8,7 +6,7 @@ import 'package:dio/dio.dart';
 class MyApiProvide {
   final GetStorage _getStorage = GetStorage();
   final Dio _dio = Dio(BaseOptions(
-      baseUrl: "https://api-mildang.brickmate.kr/api/v1/",
+      baseUrl: "https://api-mildang.brickmate.kr/api/v1",
       connectTimeout: const Duration(seconds: 6000),
       receiveTimeout: const Duration(seconds: 6000),
       responseType: ResponseType.json,
@@ -36,8 +34,8 @@ class MyApiProvide {
   Future<String?> refreshToken() async {
     try {
       final refreshToken = _getStorage.read(GetStorageKey.refreshToken);
-      final response = await _dio
-          .post('authentication/refresh', data: {'refreshToken': refreshToken});
+      final response = await _dio.post('/authentication/refresh',
+          data: {'refreshToken': refreshToken});
       final newAccessToken = response.data['accessToken'];
       _getStorage.write(GetStorageKey.accessToken, newAccessToken);
       return newAccessToken;

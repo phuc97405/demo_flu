@@ -1,4 +1,3 @@
-import 'package:demo_flu/core/utils/get_storage_key.dart';
 import 'package:demo_flu/services/data/model/req_login_model.dart';
 import 'package:demo_flu/services/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,7 +71,7 @@ class LoginController extends GetxController {
     try {
       final params = ReqLoginModel(
           phone: phoneController.text, password: passwordController.text);
-      final res = await repository.login(params);
+      final res = await repository.loginAPi(params);
       print('loginNormal$res');
       // .then((value) => {
       //       _getStorage.write(
